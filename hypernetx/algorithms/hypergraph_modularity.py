@@ -3,7 +3,7 @@ Hypergraph_Modularity
 ---------------------
 Modularity and clustering for hypergraphs using HyperNetX.
 Adapted from F. Théberge's GitHub repository: `Hypergraph Clustering <https://github.com/ftheberge/Hypergraph_Clustering>`_
-See Tutorial 10 in the tutorials folder for library usage.
+See Tutorial 13 in the tutorials folder for library usage.
 
 References
 ----------
@@ -149,7 +149,7 @@ def modularity(HG, A, wdc=linear):
     Parameters
     ----------
     HG : Hypergraph
-        The HNX hypergraph
+        The hypergraph with some precomputed attributes via: precompute_attributes(HG)
     A : list of sets
         Partition of the vertices in HG
     wdc : func, optional
@@ -226,19 +226,19 @@ def modularity(HG, A, wdc=linear):
 
 def conductance(H, A):
     """
-    Computes conductance [4] of hypergraph HG with respect to partition A.
+    Computes conductance [4] of hypergraph HG with respect to subset A.
 
     Parameters
     ----------
-    HG : Hypergraph
-        The HNX hypergraph
+    H : Hypergraph
+        The hypergraph
     A : set
-        Partition of the vertices in H
+        subset of the vertices in H
 
     Returns
     -------
     : float
-      The conductance function for partition A on H
+      The conductance function for partition (A,V-A) on H=(V,E)
     """
     subset2 = [n for n in H.nodes if n not in A]
     if len(subset2) == 0:
@@ -260,8 +260,7 @@ def conductance(H, A):
 
 def two_section(HG):
     """
-    Creates a random walk based [1]_ 2-section igraph Graph with transition weights defined by the
-    weights of the hyperedges.
+    Creates a random walk based [1]_ 2-section igraph Graph with transition weights defined by the weights of the hyperedges.
 
     Parameters
     ----------
@@ -559,19 +558,19 @@ def _last_step_unweighted(H, A, wdc, delta=0.01, verbose=False):
 
 def last_step(HG, A, wdc=linear, delta=0.01, verbose=False):
     """
-    Given some initial partition L, compute a new partition of the vertices in HG as per Last-Step algorithm [2]_
+    Given some initial partition A, compute a new partition of the vertices in HG as per Last-Step algorithm [2]_
 
     Note
     ----
     This is a very simple algorithm that tries moving nodes between communities to improve hypergraph modularity.
-    It requires an initial partition which can be obtained for example via graph clustering on the 2-section of HG,
+    It requires an initial non-trivial partition which can be obtained for example via graph clustering on the 2-section of HG,
     or via Kumar's algorithm.
 
     Parameters
     ----------
     HG : Hypergraph
 
-    L : list of sets
+    A : list of sets
       some initial partition of the vertices in HG
 
     wdc : func, optional
@@ -579,6 +578,7 @@ def last_step(HG, A, wdc=linear, delta=0.01, verbose=False):
 
     delta : float, optional
             convergence stopping criterion
+            
     verbose: boolean, optional
         If set, also returns progress after each pass through the vertices
 
