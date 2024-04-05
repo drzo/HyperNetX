@@ -3,7 +3,7 @@ Hypergraph_Modularity
 ---------------------
 Modularity and clustering for hypergraphs using HyperNetX.
 Adapted from F. Théberge's GitHub repository: `Hypergraph Clustering <https://github.com/ftheberge/Hypergraph_Clustering>`_
-See Tutorial 13 in the tutorials folder for library usage.
+See Tutorial 10 in the tutorials folder for library usage.
 
 References
 ----------
@@ -149,7 +149,7 @@ def modularity(HG, A, wdc=linear):
     Parameters
     ----------
     HG : Hypergraph
-        The hypergraph with some precomputed attributes via: precompute_attributes(HG)
+        The HNX hypergraph
     A : list of sets
         Partition of the vertices in HG
     wdc : func, optional
@@ -230,8 +230,8 @@ def conductance(H, A):
 
     Parameters
     ----------
-    H : Hypergraph
-        The hypergraph
+    HG : Hypergraph
+        The HNX hypergraph
     A : set
         Partition of the vertices in H
 
@@ -564,7 +564,7 @@ def last_step(HG, A, wdc=linear, delta=0.01, verbose=False):
     Note
     ----
     This is a very simple algorithm that tries moving nodes between communities to improve hypergraph modularity.
-    It requires an initial non-trivial partition which can be obtained for example via graph clustering on the 2-section of HG,
+    It requires an initial partition which can be obtained for example via graph clustering on the 2-section of HG,
     or via Kumar's algorithm.
 
     Parameters
